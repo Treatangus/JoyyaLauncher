@@ -6,25 +6,48 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="wrap_content"
+            android:background="@color/MinecraftToolbar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.treatangus.joyya.mcgui.MinecraftButton
+    <com.treatangus.joyya.mcgui.MinecraftLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+    <com.treatangus.joyya.mcgui.MinecraftButtonGreen
         android:id="@+id/start"
-        android:text="创建新世界"
+        android:text="@string/MinecraftButtonStartGame"
+        android:layout_width="160dp"
+        android:layout_height="40dp" />
+
+    <com.treatangus.joyya.mcgui.MinecraftButtonGray
+        android:text="由作者创建的世界"
         android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginTop="10dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.treatangus.joyya.mcgui.MinecraftLinearLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
