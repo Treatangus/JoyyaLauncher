@@ -1,22 +1,38 @@
 package com.treatangus.joyya;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.appcompat.widget.ListPopupWindow;
+
 import com.treatangus.joyya.databinding.ActivityMainBinding;
 import com.treatangus.joyya.mcgui.MinecraftButtonGreen;
+import com.treatangus.joyya.mcgui.MinecraftSpinner;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private MinecraftButtonGreen start;
+    private MinecraftSpinner msp_version;
     private Timer mTimer;
     private TimerTask systemUiTimerTask;
 
@@ -41,8 +57,38 @@ public class MainActivity extends AppCompatActivity {
     private void initUI() {
         setSupportActionBar(binding.toolbar);
         start = binding.start;
+        msp_version = binding.mspVersion;
+
+    }
+    public void onClick(View v) {
+        showListPopulWindow();
     }
 
+    private void showListPopulWindow() {
+        String[] item = getResources().getStringArray(R.array.minecraft_spinner);
+        final ListPopupWindow listPopupWindow;
+        listPopupWindow = new ListPopupWindow(this);
+        listPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//设置背景透明解决白色边框问题
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.adpter_minecraft,R.id.tv_version, item);
+        listPopupWindow.setAdapter(adapter);//用android内置布局，或设计自己的样式)
+        listPopupWindow.setAnchorView(msp_version);//以哪个控件为基准
+        listPopupWindow.setVerticalOffset(-101);//相对控件竖轴偏移量
+        listPopupWindow.setWidth(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+        listPopupWindow.setHeight(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+        listPopupWindow.setModal(true);
+        listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {//设置项点击监听
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (!((String)adapterView.getItemAtPosition(i)).equals("null")) {
+                    //setVersion((String)adapterView.getItemAtPosition(i));
+                    msp_version.setText(((String)adapterView.getItemAtPosition(i)));
+                    listPopupWindow.dismiss();
+                }
+            }
+        });
+        //listPopupWindow.setSelection(adapter.getPosition(gamesVersions()));
+        listPopupWindow.show();//把ListPopWindow展示出来
+    }
         @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

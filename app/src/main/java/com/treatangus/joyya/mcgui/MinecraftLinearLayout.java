@@ -24,10 +24,6 @@ public class MinecraftLinearLayout extends androidx.appcompat.widget.LinearLayou
 
     private Drawable[] DrawableArray = new Drawable[]{
             stroke,
-            /*top,
-            left,
-            right,
-            bottom, */
             bgNormal
     };
 
@@ -48,15 +44,10 @@ public class MinecraftLinearLayout extends androidx.appcompat.widget.LinearLayou
             public void onGlobalLayout() {
                 layerdrawable = new LayerDrawable(DrawableArray);
                 layerdrawable.setLayerInset(0, 0, 0, 0, 0); // stroke
-                /*layerdrawable.setLayerInset(1, 4, 4, 4, 4); // top
-                layerdrawable.setLayerInset(2, 4, 4, getWidth() - 4, 4); // left
-                layerdrawable.setLayerInset(3, getWidth() - 4, 4, 4, 4); // right
-                layerdrawable.setLayerInset(4, 4, getHeight() - 4, 4, 4);// bottom */
-                layerdrawable.setLayerInset(1, 8, 8, 8, 8); // bg
+                layerdrawable.setLayerInset(1, 4, 4, 4, 4); // bg
 
                 setBackgroundDrawable(layerdrawable);
                 setPadding(10, 10, 10, 10);
-                //setOnTouchListener(null);
             }
         });
 

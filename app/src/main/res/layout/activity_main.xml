@@ -46,6 +46,14 @@
         android:layout_height="40dp"
         android:layout_marginTop="10dp" />
 
+            <com.treatangus.joyya.mcgui.MinecraftSpinner
+                android:id="@+id/msp_version"
+                android:layout_width="160dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:onClick="onClick"/>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </com.treatangus.joyya.mcgui.MinecraftLinearLayout>

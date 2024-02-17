@@ -1,20 +1,32 @@
 package com.treatangus.joyya.mcgui;
 
-import android.content.*;
+import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
-import android.graphics.*;
-import android.graphics.drawable.*;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
-import android.util.*;
-import android.view.*;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.ViewTreeObserver;
+
+import com.treatangus.joyya.R;
 
 import java.io.IOException;
 
-public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButton {
+public class MinecraftSpinner extends androidx.appcompat.widget.AppCompatButton {
+
     private ColorDrawable left = new ColorDrawable(Color.parseColor("#ecedee"));
     private ColorDrawable top = new ColorDrawable(Color.parseColor("#58585a"));
     private ColorDrawable stroke = new ColorDrawable(Color.parseColor("#1e1e1e"));
@@ -57,13 +69,14 @@ public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButt
 
     private LayerDrawable layerdrawable, layerdrawablefocus;
 
-    public MinecraftButtonGray(Context ctx) {
+    public MinecraftSpinner(Context ctx) {
         this(ctx, null);
     }
 
-    public MinecraftButtonGray(Context ctx, AttributeSet attrs) {
+    public MinecraftSpinner(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
         initButtonSound(); //因为SoundPool需要预加载声音资源，否则会出现第一次按下按钮没有声音的问题
+        setArrowImage();
         init();
     }
 
@@ -90,15 +103,18 @@ public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButt
 
                 setBackgroundDrawable(layerdrawable);
                 setTextColor(Color.BLACK);
-                setPadding(10, 10, 10, 10);
+                setPadding(10, 10, 40, 10);
                 //setOnTouchListener(null);
             }
         });
         setTypeface(Typeface.createFromAsset(getContext().getAssets(), "font/minecraft_seven.ttf"));
 
     }
-
-
+    private void setArrowImage() {
+        Drawable arrow = getResources().getDrawable(R.drawable.icon_arrow_down);
+        arrow.setBounds(0,0,30,20); //设置箭头大小
+        setCompoundDrawables(null,null,arrow,null); //设置箭头显示的位置
+    }
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
@@ -109,7 +125,6 @@ public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButt
     public boolean onTouchEvent(MotionEvent event) {
         if ((event.getAction() == event.ACTION_UP) && !isUp && isEnabled()) {
             setBackgroundDrawable(layerdrawable);
-            setTranslationY(0f); //松手时还原
             isUp = true;
         } else if (event.getAction() == event.ACTION_DOWN && isUp) {
             setBackgroundDrawable(layerdrawablefocus);
@@ -120,7 +135,6 @@ public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButt
             } else {
                 MinecraftButtonSound.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f);
             }
-            setTranslationY(10f); //按下时向下移动10dp，看起来更加灵动
             isUp = false;
         }
 

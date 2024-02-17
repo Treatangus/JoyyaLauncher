@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NoBorderListPopupStyle" parent="Widget.AppCompat.ListPopupWindow">
+        <item name="android:popupBackground">@android:color/transparent</item>
+    </style>
+</resources>
