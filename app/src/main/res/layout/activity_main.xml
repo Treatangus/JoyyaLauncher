@@ -22,10 +22,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.treatangus.joyya.mcgui.MinecraftLinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
+        android:background="@drawable/background_minecraft_black"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -34,13 +35,13 @@
             android:padding="10dp"
             android:orientation="vertical">
 
-    <com.treatangus.joyya.mcgui.MinecraftButtonGreen
+    <com.treatangus.joyya.mcgui.button.MinecraftButton
         android:id="@+id/start"
         android:text="@string/MinecraftButtonStartGame"
         android:layout_width="160dp"
         android:layout_height="40dp" />
 
-    <com.treatangus.joyya.mcgui.MinecraftButtonGray
+    <com.treatangus.joyya.mcgui.button.MinecraftButtonGray
         android:text="由作者创建的世界"
         android:layout_width="160dp"
         android:layout_height="40dp"
@@ -56,6 +57,6 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </com.treatangus.joyya.mcgui.MinecraftLinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
