@@ -54,6 +54,12 @@
                 android:gravity="center"
                 android:onClick="onClick"/>
 
+            <com.treatangus.joyya.mcgui.MinecraftButton
+                android:text="创造"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </com.treatangus.joyya.mcgui.MinecraftLinearLayout>

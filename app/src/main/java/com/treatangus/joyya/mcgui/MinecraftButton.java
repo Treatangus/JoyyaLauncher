@@ -14,21 +14,21 @@ import android.view.*;
 
 import java.io.IOException;
 
-public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButton {
-    private ColorDrawable left = new ColorDrawable(Color.parseColor("#ecedee"));
-    private ColorDrawable top = new ColorDrawable(Color.parseColor("#58585a"));
+public class MinecraftButton extends androidx.appcompat.widget.AppCompatButton {
     private ColorDrawable stroke = new ColorDrawable(Color.parseColor("#1e1e1e"));
-    private ColorDrawable right = new ColorDrawable(Color.parseColor("#e3e3e5"));
-    private ColorDrawable bottom = new ColorDrawable(Color.parseColor("#e3e3e5"));
-    private ColorDrawable topStroke = new ColorDrawable(Color.parseColor("#ecedee"));
-    private ColorDrawable bgNormal = new ColorDrawable(Color.parseColor("#d0d1d4"));
+    private ColorDrawable shadow = new ColorDrawable(Color.parseColor("#1d4d12"));
+    private ColorDrawable bgNormal = new ColorDrawable(Color.parseColor("#3c8526"));
+    private ColorDrawable left = new ColorDrawable(Color.parseColor("#33ffffff"));
+    private ColorDrawable top = new ColorDrawable(Color.parseColor("#33ffffff"));
+    private ColorDrawable right = new ColorDrawable(Color.parseColor("#19ffffff"));
+    private ColorDrawable bottom = new ColorDrawable(Color.parseColor("#19ffffff"));
 
-    private ColorDrawable strokeFocus = new ColorDrawable(Color.parseColor("#1e1e1e"));
-    private ColorDrawable leftFocus = new ColorDrawable(Color.parseColor("#e0e0e1"));
-    private ColorDrawable topFocus = new ColorDrawable(Color.parseColor("#e0e0e1"));
-    private ColorDrawable rightFocus = new ColorDrawable(Color.parseColor("#d0d1d3"));
-    private ColorDrawable bottomFocus = new ColorDrawable(Color.parseColor("#d0d1d3"));
-    private ColorDrawable bgFocus = new ColorDrawable(Color.parseColor("#b1b2b5"));
+    private ColorDrawable strokeFocus = new ColorDrawable(Color.parseColor("#1e1c21"));
+    private ColorDrawable bgFocus = new ColorDrawable(Color.parseColor("#1d4d13"));
+    private ColorDrawable leftFocus = new ColorDrawable(Color.parseColor("#4cffffff"));
+    private ColorDrawable topFocus = new ColorDrawable(Color.parseColor("#4cffffff"));
+    private ColorDrawable rightFocus = new ColorDrawable(Color.parseColor("#33ffffff"));
+    private ColorDrawable bottomFocus = new ColorDrawable(Color.parseColor("#33ffffff"));
     private AssetManager assetManager;
     private SoundPool MinecraftButtonSound;
     private AssetFileDescriptor fileDescriptor;
@@ -38,30 +38,30 @@ public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButt
 
     private Drawable[] DrawableArray = new Drawable[]{
             stroke,
-            top,
-            topStroke,
+            shadow,
+            bgNormal,
             left,
+            top,
             right,
-            bottom,
-            bgNormal
+            bottom
     };
 
     private Drawable[] DrawableArrayFocus = new Drawable[]{
             strokeFocus,
+            bgFocus,
             topFocus,
             leftFocus,
             rightFocus,
-            bottomFocus,
-            bgFocus
+            bottomFocus
     };
 
     private LayerDrawable layerdrawable, layerdrawablefocus;
 
-    public MinecraftButtonGray(Context ctx) {
+    public MinecraftButton(Context ctx) {
         this(ctx, null);
     }
 
-    public MinecraftButtonGray(Context ctx, AttributeSet attrs) {
+    public MinecraftButton(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
         initButtonSound(); //因为SoundPool需要预加载声音资源，否则会出现第一次按下按钮没有声音的问题
         init();
@@ -73,23 +73,23 @@ public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButt
             public void onGlobalLayout() {
                 layerdrawable = new LayerDrawable(DrawableArray);
                 layerdrawable.setLayerInset(0, 0, 0, 0, 0); // stroke
-                layerdrawable.setLayerInset(1, 4, 4, 4, 4); // top
-                layerdrawable.setLayerInset(2, 4, 8, 4, getHeight() - 4); // topStroke
-                layerdrawable.setLayerInset(3, 4, 8, getWidth() - 12, 16); // left
-                layerdrawable.setLayerInset(4, getWidth() - 12, 8, 4, 16); // right
-                layerdrawable.setLayerInset(5, 4, getHeight() - 12, 4, 16);// bottom
-                layerdrawable.setLayerInset(6, 8, 8, 8, 16); // bg
+                layerdrawable.setLayerInset(1, 4, 4, 4, 4);// shadow
+                layerdrawable.setLayerInset(2, 4, 4, 4, 12); // bg
+                layerdrawable.setLayerInset(3, 8, 4, getWidth() - 4, 12); // left
+                layerdrawable.setLayerInset(4, 8, 8, 4, getHeight() - 4); // top
+                layerdrawable.setLayerInset(5, getWidth() - 4,4, 8, 12); // right
+                layerdrawable.setLayerInset(6, 4, getHeight() - 12, 8, 16); // bottom
 
                 layerdrawablefocus = new LayerDrawable(DrawableArrayFocus);
-                layerdrawablefocus.setLayerInset(0, 0, 0, 0, 0); // stroke
-                layerdrawablefocus.setLayerInset(1, 4, 4, 4, 4); // top
-                layerdrawablefocus.setLayerInset(2, 4, 4, getWidth() - 4, 4); // left
-                layerdrawablefocus.setLayerInset(3, getWidth() - 4, 4, 4, 4); // right
-                layerdrawablefocus.setLayerInset(4, 4, getHeight() - 4, 4, 4);// bottom
-                layerdrawablefocus.setLayerInset(5, 8, 8, 8, 8); // bg
+                layerdrawablefocus.setLayerInset(0, 0, 0, 0, 0); // strokeFocus
+                layerdrawablefocus.setLayerInset(1, 4, 4, 4, 4); // bgFocus
+                layerdrawablefocus.setLayerInset(2, 8, 4, getWidth() - 4, 4); // leftFocus
+                layerdrawablefocus.setLayerInset(3, 8, 8, 4, getHeight() - 4); // topFocus
+                layerdrawablefocus.setLayerInset(4, getWidth() - 4,4, 8, 4); // rightFocus
+                layerdrawablefocus.setLayerInset(5, 4, getHeight() - 8, 8, 4); // bottomFocus
 
                 setBackgroundDrawable(layerdrawable);
-                setTextColor(Color.BLACK);
+                setTextColor(Color.WHITE);
                 setPadding(10, 10, 10, 10);
                 //setOnTouchListener(null);
             }
@@ -137,7 +137,7 @@ public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButt
                 MinecraftButtonSound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
             }
             assetManager = getContext().getAssets();
-            fileDescriptor = assetManager.openFd("sounds/click.ogg");
+            fileDescriptor = assetManager.openFd("sounds/Minecraft_Button_Green_Sound.ogg");
             soundId = MinecraftButtonSound.load(fileDescriptor, 1);
         } catch (IOException e) {
             e.printStackTrace();

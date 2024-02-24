@@ -152,7 +152,7 @@ public class MinecraftButtonGreen extends androidx.appcompat.widget.AppCompatBut
         if (MinecraftButtonSound.unload(streamId)) {
             MinecraftButtonSound.stop(streamId);
         }
-        MinecraftButtonSound2.release();
+        MinecraftButtonSound.release();
         super.onDetachedFromWindow();
     }
 

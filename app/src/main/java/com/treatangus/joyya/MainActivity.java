@@ -1,7 +1,6 @@
 package com.treatangus.joyya;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,14 +9,15 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.ListPopupWindow;
 
 import com.treatangus.joyya.databinding.ActivityMainBinding;
+import com.treatangus.joyya.mcgui.MinecraftAdapter;
 import com.treatangus.joyya.mcgui.MinecraftButtonGreen;
 import com.treatangus.joyya.mcgui.MinecraftSpinner;
+import com.treatangus.joyya.bean.LocalVersionListBean;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import org.json.JSONObject;
 
@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -65,12 +66,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showListPopulWindow() {
-        String[] item = getResources().getStringArray(R.array.minecraft_spinner);
+        //String[] item = getResources().getStringArray(R.array.minecraft_spinner);
+
+        List<String> itemList = Arrays.asList("Item 1", "Item 2", "Item 3", "Item 4");
         final ListPopupWindow listPopupWindow;
         listPopupWindow = new ListPopupWindow(this);
-        listPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//设置背景透明解决白色边框问题
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.adpter_minecraft,R.id.tv_version, item);
-        listPopupWindow.setAdapter(adapter);//用android内置布局，或设计自己的样式)
+
+       //listPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//设置背景透明解决白色边框问题
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.adapter_minecraft,R.id.tv_version, item);
+
+        listPopupWindow.setAdapter(adapter);//用android内置布局，或设计自己的样式)*/
+        listPopupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.listpopupwindow_background));//设置背景
+        MinecraftAdapter adapter = new MinecraftAdapter(this, itemList);
+        listPopupWindow.setAdapter(adapter);//用android内置布局，或设计自己的样式)*/
         listPopupWindow.setAnchorView(msp_version);//以哪个控件为基准
         listPopupWindow.setVerticalOffset(-101);//相对控件竖轴偏移量
         listPopupWindow.setWidth(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
@@ -86,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        //listPopupWindow.setSelection(adapter.getPosition(gamesVersions()));
         listPopupWindow.show();//把ListPopWindow展示出来
     }
         @Override
@@ -124,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     private void hideSystemUI(View decorView) {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE
                 // Set the content to appear under the system bars so that the
@@ -135,5 +143,4 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
-
 }

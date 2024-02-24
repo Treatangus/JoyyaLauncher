@@ -111,7 +111,7 @@ public class MinecraftSpinner extends androidx.appcompat.widget.AppCompatButton 
 
     }
     private void setArrowImage() {
-        Drawable arrow = getResources().getDrawable(R.drawable.icon_arrow_down);
+        Drawable arrow = getResources().getDrawable(R.drawable.icon_arrow_down_black);
         arrow.setBounds(0,0,30,20); //设置箭头大小
         setCompoundDrawables(null,null,arrow,null); //设置箭头显示的位置
     }
@@ -151,7 +151,7 @@ public class MinecraftSpinner extends androidx.appcompat.widget.AppCompatButton 
                 MinecraftButtonSound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
             }
             assetManager = getContext().getAssets();
-            fileDescriptor = assetManager.openFd("sounds/Minecraft_Button_Gray_Sound.ogg");
+            fileDescriptor = assetManager.openFd("sounds/click.ogg");
             soundId = MinecraftButtonSound.load(fileDescriptor, 1);
         } catch (IOException e) {
             e.printStackTrace();

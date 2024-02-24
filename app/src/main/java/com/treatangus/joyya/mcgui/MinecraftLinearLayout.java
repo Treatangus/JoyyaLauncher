@@ -1,18 +1,10 @@
 package com.treatangus.joyya.mcgui;
 
 import android.content.*;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.graphics.*;
 import android.graphics.drawable.*;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.os.Build;
 import android.util.*;
 import android.view.*;
-
-import java.io.IOException;
 
 public class MinecraftLinearLayout extends androidx.appcompat.widget.LinearLayoutCompat {
     private ColorDrawable left = new ColorDrawable(Color.parseColor("#ecedee"));

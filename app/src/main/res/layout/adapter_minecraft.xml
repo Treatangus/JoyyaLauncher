@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="2dp">
 
-    <com.treatangus.joyya.mcgui.MinecraftLinearLayout
-        android:layout_width="wrap_content"
+    <com.treatangus.joyya.mcgui.MinecraftLinearLayoutGray
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
 
@@ -23,15 +24,16 @@
             android:gravity="center"/>
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_check"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_centerInParent="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
-            android:src="@drawable/icon_check"/>
+            android:src="@drawable/icon_check_white"/>
 
     </RelativeLayout>
 
-</com.treatangus.joyya.mcgui.MinecraftLinearLayout>
+    </com.treatangus.joyya.mcgui.MinecraftLinearLayoutGray>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
