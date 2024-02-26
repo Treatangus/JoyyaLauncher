@@ -39,13 +39,15 @@
         android:id="@+id/start"
         android:text="@string/MinecraftButtonStartGame"
         android:layout_width="160dp"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        app:MinecraftButtonStyle="GREEN"/>
 
-    <com.treatangus.joyya.mcgui.button.MinecraftButtonGray
+    <com.treatangus.joyya.mcgui.button.MinecraftButton
         android:text="由作者创建的世界"
         android:layout_width="160dp"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        app:MinecraftButtonStyle="GRAY"/>
 
             <com.treatangus.joyya.mcgui.MinecraftSpinner
                 android:id="@+id/msp_version"
@@ -55,11 +57,10 @@
                 android:gravity="center"
                 android:onClick="onClick"/>
 
-            <com.treatangus.joyya.mcgui.MinecraftButton
-                android:text="创造"
-                android:layout_width="160dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp" />
+            <com.treatangus.joyya.mcgui.switcher.SwitchPlanel
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

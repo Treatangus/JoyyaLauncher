@@ -3,6 +3,7 @@ package com.treatangus.joyya.mcgui.button;
 import android.content.*;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.content.res.TypedArray;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.media.AudioManager;
@@ -11,23 +12,28 @@ import android.os.Build;
 import android.util.*;
 import android.view.*;
 
+import com.treatangus.joyya.R;
+
 import java.io.IOException;
 
 public class MinecraftButton extends androidx.appcompat.widget.AppCompatButton {
-    private ColorDrawable stroke = new ColorDrawable(Color.parseColor("#1e1e1e"));
-    private ColorDrawable shadow = new ColorDrawable(Color.parseColor("#1d4d12"));
-    private ColorDrawable bgNormal = new ColorDrawable(Color.parseColor("#3c8526"));
-    private ColorDrawable left = new ColorDrawable(Color.parseColor("#33ffffff"));
-    private ColorDrawable top = new ColorDrawable(Color.parseColor("#33ffffff"));
-    private ColorDrawable right = new ColorDrawable(Color.parseColor("#19ffffff"));
-    private ColorDrawable bottom = new ColorDrawable(Color.parseColor("#19ffffff"));
+    public SwitchButtonStyle switchButtonStyle;
+    private String[] minecrftButtonColor = new String[13];
 
-    private ColorDrawable strokeFocus = new ColorDrawable(Color.parseColor("#1e1e1e"));
-    private ColorDrawable bgFocus = new ColorDrawable(Color.parseColor("#1d4d13"));
-    private ColorDrawable leftFocus = new ColorDrawable(Color.parseColor("#4cffffff"));
-    private ColorDrawable topFocus = new ColorDrawable(Color.parseColor("#4cffffff"));
-    private ColorDrawable rightFocus = new ColorDrawable(Color.parseColor("#33ffffff"));
-    private ColorDrawable bottomFocus = new ColorDrawable(Color.parseColor("#33ffffff"));
+    private ColorDrawable stroke;
+    private ColorDrawable shadow;
+    private ColorDrawable bgNormal;
+    private ColorDrawable left;
+    private ColorDrawable top;
+    private ColorDrawable right;
+    private ColorDrawable bottom;
+    private ColorDrawable strokeFocus;
+    private ColorDrawable bgFocus;
+    private ColorDrawable leftFocus;
+    private ColorDrawable topFocus;
+    private ColorDrawable rightFocus;
+    private ColorDrawable bottomFocus;
+
     private AssetManager assetManager;
     private SoundPool MinecraftButtonSound;
     private AssetFileDescriptor fileDescriptor;
@@ -35,25 +41,8 @@ public class MinecraftButton extends androidx.appcompat.widget.AppCompatButton {
     private int streamId;
     private boolean isUp = true;
 
-    private Drawable[] DrawableArray = new Drawable[]{
-            stroke,
-            shadow,
-            bgNormal,
-            left,
-            top,
-            right,
-            bottom
-    };
-
-    private Drawable[] DrawableArrayFocus = new Drawable[]{
-            strokeFocus,
-            bgFocus,
-            topFocus,
-            leftFocus,
-            rightFocus,
-            bottomFocus
-    };
-
+    private Drawable[] DrawableArray = new Drawable[7];
+    private Drawable[] DrawableArrayFocus = new Drawable[6];
     private LayerDrawable layerdrawable, layerdrawablefocus;
 
     public MinecraftButton(Context ctx) {
@@ -62,8 +51,36 @@ public class MinecraftButton extends androidx.appcompat.widget.AppCompatButton {
 
     public MinecraftButton(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
+        initAttribute(ctx,attrs);
+        SwitchStyle();
         initButtonSound(); //因为SoundPool需要预加载声音资源，否则会出现第一次按下按钮没有声音的问题
         init();
+    }
+
+    private void initAttribute(Context context,AttributeSet attrs) {
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MinecraftButton);
+        //mSwitchButtonStyle = getSwitchButtonStyle(typedArray.getInt(R.styleable.MinecraftButton_MinecraftButtonStyle,0));
+        switchButtonStyle = SwitchButtonStyle.values()[typedArray.getInt(R.styleable.MinecraftButton_MinecraftButtonStyle, 0)];
+        typedArray.recycle();
+    }
+
+    public enum SwitchButtonStyle {
+        GREEN,
+        GRAY
+    }
+
+    /**
+     * Switch Style
+     */
+    private void SwitchStyle() {
+        switch (switchButtonStyle) {
+            case GREEN:
+               GREENSTYLE();
+                break;
+            case GRAY:
+               GRAYSTYLE();
+                break;
+        }
     }
 
     public void init() {
@@ -88,15 +105,17 @@ public class MinecraftButton extends androidx.appcompat.widget.AppCompatButton {
                 layerdrawablefocus.setLayerInset(5, 4, getHeight() - 8, 8, 4); // bottomFocus
 
                 setBackgroundDrawable(layerdrawable);
-                setTextColor(Color.WHITE);
+                if (switchButtonStyle == SwitchButtonStyle.GRAY) {
+                    setTextColor(Color.BLACK);
+                } else {
+                    setTextColor(Color.WHITE);
+                }
                 setPadding(10, 10, 10, 10);
-                //setOnTouchListener(null);
             }
         });
         setTypeface(Typeface.createFromAsset(getContext().getAssets(), "font/minecraft_seven.ttf"));
 
     }
-
 
     @Override
     public void setEnabled(boolean enabled) {
@@ -136,7 +155,11 @@ public class MinecraftButton extends androidx.appcompat.widget.AppCompatButton {
                 MinecraftButtonSound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
             }
             assetManager = getContext().getAssets();
-            fileDescriptor = assetManager.openFd("sounds/button.ogg");
+            if (switchButtonStyle == SwitchButtonStyle.GREEN) {
+                fileDescriptor = assetManager.openFd("sounds/button.ogg");
+            } else {
+                fileDescriptor = assetManager.openFd("sounds/click.ogg");
+            }
             soundId = MinecraftButtonSound.load(fileDescriptor, 1);
         } catch (IOException e) {
             e.printStackTrace();
@@ -152,27 +175,99 @@ public class MinecraftButton extends androidx.appcompat.widget.AppCompatButton {
         super.onDetachedFromWindow();
     }
 
-    /* private void MediaPlayer用法() {
-        try {
-            if (MinecraftButtonSound2 == null) {
+    /**
+     * Setting GREEN Style
+     */
+    private void GREENSTYLE() {
 
-                assetManager = getContext().getAssets();
-                AssetFileDescriptor fileDescriptor = assetManager.openFd("sounds/Minecraft_Button_Green_Sound.ogg");
-                MinecraftButtonSound2 = new MediaPlayer();
-                MinecraftButtonSound2.setDataSource(fileDescriptor.getFileDescriptor(),
-                        fileDescriptor.getStartOffset(),
-                        fileDescriptor.getLength());
-                MinecraftButtonSound2.prepare();
-                MinecraftButtonSound2.start();
-            } else if (MinecraftButtonSound2.isPlaying()) {
-                MinecraftButtonSound2.stop();
-                MinecraftButtonSound2.prepare();
-                MinecraftButtonSound2.start();
-            } else {
-                MinecraftButtonSound2.start();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    } */
+        minecrftButtonColor[0] = "#1e1e1e";
+        minecrftButtonColor[1] = "#1d4d12";
+        minecrftButtonColor[2] = "#3c8526";
+        minecrftButtonColor[3] = "#33ffffff";
+        minecrftButtonColor[4] = "#33ffffff";
+        minecrftButtonColor[5] = "#19ffffff";
+        minecrftButtonColor[6] = "#19ffffff";
+        minecrftButtonColor[7] = "#1e1e1e";
+        minecrftButtonColor[8] = "#1d4d13";
+        minecrftButtonColor[9] = "#4cffffff";
+        minecrftButtonColor[10] = "#4cffffff";
+        minecrftButtonColor[11] = "#33ffffff";
+        minecrftButtonColor[12] = "#33ffffff";
+
+        stroke = new ColorDrawable(Color.parseColor(minecrftButtonColor[0]));
+        shadow = new ColorDrawable(Color.parseColor(minecrftButtonColor[1]));
+        bgNormal = new ColorDrawable(Color.parseColor(minecrftButtonColor[2]));
+        left = new ColorDrawable(Color.parseColor(minecrftButtonColor[3]));
+        top = new ColorDrawable(Color.parseColor(minecrftButtonColor[4]));
+        right = new ColorDrawable(Color.parseColor(minecrftButtonColor[5]));
+        bottom = new ColorDrawable(Color.parseColor(minecrftButtonColor[6]));
+        strokeFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[7]));
+        bgFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[8]));
+        leftFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[9]));
+        topFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[10]));
+        rightFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[11]));
+        bottomFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[12]));
+
+        DrawableArray[0] = stroke;
+        DrawableArray[1] = shadow;
+        DrawableArray[2] = bgNormal;
+        DrawableArray[3] = left;
+        DrawableArray[4] = top;
+        DrawableArray[5] = right;
+        DrawableArray[6] = bottom;
+        DrawableArrayFocus[0] = strokeFocus;
+        DrawableArrayFocus[1] = bgFocus;
+        DrawableArrayFocus[2] = leftFocus;
+        DrawableArrayFocus[3] = topFocus;
+        DrawableArrayFocus[4] = rightFocus;
+        DrawableArrayFocus[5] = bottomFocus;
+    }
+
+    /**
+     * Setting GRAY Style
+     */
+    private void GRAYSTYLE() {
+
+        minecrftButtonColor[0] = "#1e1e1e";
+        minecrftButtonColor[1] = "#58585a";
+        minecrftButtonColor[2] = "#d0d1d5";
+        minecrftButtonColor[3] = "#b2ffffff";
+        minecrftButtonColor[4] = "#b2ffffff";
+        minecrftButtonColor[5] = "#a5ffffff";
+        minecrftButtonColor[6] = "#a5ffffff";
+        minecrftButtonColor[7] = "#1e1e1e";
+        minecrftButtonColor[8] = "#b1b2b5";
+        minecrftButtonColor[9] = "#b2ffffff";
+        minecrftButtonColor[10] = "#b2ffffff";
+        minecrftButtonColor[11] = "#a5ffffff";
+        minecrftButtonColor[12] = "#a5ffffff";
+
+        stroke = new ColorDrawable(Color.parseColor(minecrftButtonColor[0]));
+        shadow = new ColorDrawable(Color.parseColor(minecrftButtonColor[1]));
+        bgNormal = new ColorDrawable(Color.parseColor(minecrftButtonColor[2]));
+        left = new ColorDrawable(Color.parseColor(minecrftButtonColor[3]));
+        top = new ColorDrawable(Color.parseColor(minecrftButtonColor[4]));
+        right = new ColorDrawable(Color.parseColor(minecrftButtonColor[5]));
+        bottom = new ColorDrawable(Color.parseColor(minecrftButtonColor[6]));
+        strokeFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[7]));
+        bgFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[8]));
+        leftFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[9]));
+        topFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[10]));
+        rightFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[11]));
+        bottomFocus = new ColorDrawable(Color.parseColor(minecrftButtonColor[12]));
+
+        DrawableArray[0] = stroke;
+        DrawableArray[1] = shadow;
+        DrawableArray[2] = bgNormal;
+        DrawableArray[3] = left;
+        DrawableArray[4] = top;
+        DrawableArray[5] = right;
+        DrawableArray[6] = bottom;
+        DrawableArrayFocus[0] = strokeFocus;
+        DrawableArrayFocus[1] = bgFocus;
+        DrawableArrayFocus[2] = leftFocus;
+        DrawableArrayFocus[3] = topFocus;
+        DrawableArrayFocus[4] = rightFocus;
+        DrawableArrayFocus[5] = bottomFocus;
+    }
 }

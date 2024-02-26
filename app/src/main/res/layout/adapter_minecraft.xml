@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:padding="4px">
 
-    <com.treatangus.joyya.mcgui.MinecraftLinearLayoutGray
+    <com.treatangus.joyya.mcgui.MinecraftLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -34,6 +34,6 @@
 
     </RelativeLayout>
 
-    </com.treatangus.joyya.mcgui.MinecraftLinearLayoutGray>
+    </com.treatangus.joyya.mcgui.MinecraftLinearLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

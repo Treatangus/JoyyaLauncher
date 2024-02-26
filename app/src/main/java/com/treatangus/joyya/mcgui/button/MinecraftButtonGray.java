@@ -152,4 +152,28 @@ public class MinecraftButtonGray extends androidx.appcompat.widget.AppCompatButt
         MinecraftButtonSound.release();
         super.onDetachedFromWindow();
     }
+
+    /* private void MediaPlayer用法() {
+        try {
+            if (MinecraftButtonSound2 == null) {
+
+                assetManager = getContext().getAssets();
+                AssetFileDescriptor fileDescriptor = assetManager.openFd("sounds/Minecraft_Button_Green_Sound.ogg");
+                MinecraftButtonSound2 = new MediaPlayer();
+                MinecraftButtonSound2.setDataSource(fileDescriptor.getFileDescriptor(),
+                        fileDescriptor.getStartOffset(),
+                        fileDescriptor.getLength());
+                MinecraftButtonSound2.prepare();
+                MinecraftButtonSound2.start();
+            } else if (MinecraftButtonSound2.isPlaying()) {
+                MinecraftButtonSound2.stop();
+                MinecraftButtonSound2.prepare();
+                MinecraftButtonSound2.start();
+            } else {
+                MinecraftButtonSound2.start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } */
 }

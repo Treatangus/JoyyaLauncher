@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="MinecraftButton">
-        <attr name="MinecraftButtonStyle" format="reference"/>
+        <attr name="MinecraftButtonStyle">
+            <enum name="GREEN" value="0"/>
+            <enum name="GRAY" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>

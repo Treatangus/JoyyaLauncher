@@ -13,7 +13,7 @@ import android.view.*;
 
 import java.io.IOException;
 
-public class MinecraftLinearLayoutGray extends androidx.appcompat.widget.LinearLayoutCompat {
+public class MinecraftLinearLayout extends androidx.appcompat.widget.LinearLayoutCompat {
 
     private ColorDrawable stroke = new ColorDrawable(Color.parseColor("#8c8d8f"));
     private ColorDrawable bgNormal = new ColorDrawable(Color.parseColor("#58585a"));
@@ -38,11 +38,11 @@ public class MinecraftLinearLayoutGray extends androidx.appcompat.widget.LinearL
 
     private LayerDrawable layerdrawable, layerdrawablefocus;
 
-    public MinecraftLinearLayoutGray(Context ctx) {
+    public MinecraftLinearLayout(Context ctx) {
         this(ctx, null);
     }
 
-    public MinecraftLinearLayoutGray(Context ctx, AttributeSet attrs) {
+    public MinecraftLinearLayout(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
         initButtonSound(); //因为SoundPool需要预加载声音资源，否则会出现第一次按下按钮没有声音的问题
         init();
